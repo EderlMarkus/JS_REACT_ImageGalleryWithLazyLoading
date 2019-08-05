@@ -12,9 +12,12 @@ export default class Gallery extends Component {
 
   componentDidMount() {
     const limit = this.getPhotoLimit();
-    axios
-      .get('https://jsonplaceholder.typicode.com/photos/?_limit=' + limit)
-      .then(res => this.setState({ photos: res.data }));
+    if (limit > 0 && limit <= 100) {
+      axios
+        .get('https://jsonplaceholder.typicode.com/photos/?_limit=' + limit)
+        .then(res => this.setState({ photos: res.data }));
+    }
+    this.setState({ photos: false });
   }
 
   getPhotoLimit = () => {
@@ -22,14 +25,21 @@ export default class Gallery extends Component {
   };
 
   render() {
-    const gallery = this.state.photos.map(photo => (
-      <Col key={photo.id} xs={6} md={4}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Photo src={photo.url} alt={photo.title} />
-        </Suspense>
-      </Col>
-    ));
-
+    let gallery;
+    if (this.state.photos != false) {
+      gallery = this.state.photos.map(photo => (
+        <Col key={photo.id} xs={6} md={4}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Photo src={photo.url} alt={photo.title} />
+          </Suspense>
+        </Col>
+      ));
+    } else {
+      gallery =
+        'Please choose a photo_limit between 1 and 100 by adding "?photo_limit=x" to the url, x being your number (e.g. "' +
+        window.location.host +
+        '?photo_limit=5")';
+    }
     return (
       <div>
         <Container>

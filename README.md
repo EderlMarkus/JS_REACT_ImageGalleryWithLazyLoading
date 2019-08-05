@@ -11,4 +11,5 @@ Images from --> https://jsonplaceholder.typicode.com/photos <br />
 
 ## Live Demo
 
-https://ederlmarkus.github.io/JS_REACT_ImageGalleryWithLazyLoading/
+You can vary the number of displayed Photos with the Parameter "photo_limit" (choose a number between 1-100)
+https://ederlmarkus.github.io/JS_REACT_ImageGalleryWithLazyLoading/?photo_limit=10
