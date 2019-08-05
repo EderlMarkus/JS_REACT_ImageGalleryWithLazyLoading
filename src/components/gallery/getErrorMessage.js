@@ -1,6 +1,9 @@
 import React from 'react';
 import getURLWithPathname from './getURLWithPathname';
 
+/**
+ * Returns JSX of an Error-Message for invalid number of Photo-Limit
+ */
 export default function getErrorMessage() {
   const exampleUrl = getURLWithPathname() + '?photo_limit=5';
   return (

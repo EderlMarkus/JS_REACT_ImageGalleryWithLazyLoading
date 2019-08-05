@@ -1,41 +1,35 @@
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import axios from 'axios';
 import getPhotoLimit from './getPhotoLimit';
-import getPhotoGallery from './getPhotoGallery';
 import getErrorMessage from './getErrorMessage';
+import getPhotoArrayFromApiWithLimit from './getPhotosFromApi';
+import getPhotoGalleryFromArray from './getPhotoGallery';
 
 export default class Gallery extends Component {
   state = {
-    photos: [],
-    limit: 0
+    content: []
   };
 
   componentDidMount() {
-    this.setState({ limit: getPhotoLimit() }, () => {
-      if (this.state.limit > 0 && this.state.limit <= 100) {
-        axios
-          .get(
-            'https://jsonplaceholder.typicode.com/photos/?_limit=' +
-              this.state.limit
-          )
-          .then(res => this.setState({ photos: res.data }));
-      }
-    });
+    const photolimit = getPhotoLimit();
+
+    if (photolimit > 0 && photolimit <= 100) {
+      getPhotoArrayFromApiWithLimit(photolimit).then(data => {
+        this.setState({
+          content: getPhotoGalleryFromArray(data)
+        });
+      });
+    } else {
+      this.setState({ content: getErrorMessage() });
+    }
   }
 
   render() {
-    let content;
-    if (this.state.limit > 0) {
-      content = getPhotoGallery(this.state.photos);
-    } else {
-      content = getErrorMessage();
-    }
     return (
       <div>
         <Container>
-          <Row>{content}</Row>
+          <Row>{this.state.content}</Row>
         </Container>
       </div>
     );
