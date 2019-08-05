@@ -24,9 +24,17 @@ export default class Gallery extends Component {
     return window.location.search.substr(1).split('photo_limit=')[1];
   };
 
+  getURLWithPathname = () => {
+    const loc = window.location;
+    if (loc.pathname === '/') {
+      return loc.host;
+    }
+    return loc.host + loc.pathname;
+  };
+
   render() {
     let gallery;
-    if (this.state.photos != false) {
+    if (this.state.photos !== false) {
       gallery = this.state.photos.map(photo => (
         <Col key={photo.id} xs={6} md={4}>
           <Suspense fallback={<div>Loading...</div>}>
@@ -37,7 +45,7 @@ export default class Gallery extends Component {
     } else {
       gallery =
         'Please choose a photo_limit between 1 and 100 by adding "?photo_limit=x" to the url, x being your number (e.g. "' +
-        window.location.host +
+        this.getURLWithPathname() +
         '?photo_limit=5")';
     }
     return (
