@@ -11,10 +11,15 @@ export default class Gallery extends Component {
   };
 
   componentDidMount() {
+    const limit = this.getPhotoLimit();
     axios
-      .get('https://jsonplaceholder.typicode.com/photos/?_limit=20')
+      .get('https://jsonplaceholder.typicode.com/photos/?_limit=' + limit)
       .then(res => this.setState({ photos: res.data }));
   }
+
+  getPhotoLimit = () => {
+    return window.location.search.substr(1).split('photo_limit=')[1];
+  };
 
   render() {
     const gallery = this.state.photos.map(photo => (

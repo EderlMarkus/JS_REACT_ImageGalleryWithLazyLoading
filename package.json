@@ -2,15 +2,20 @@
   "name": "lazyload_new",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://EderlMarkus.github.io/JS_REACT_ImageGalleryWithLazyLoading",
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.10",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
